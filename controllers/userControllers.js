@@ -10,7 +10,7 @@ const getAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
     const { id } = req.params
 
-    if(!id) return res.status(404).send({err: "ID Not Found"})
+    if (!id) return res.status(404).send({ err: "ID Not Found" })
 
     const user = await client.query(`SELECT * FROM users WHERE id = '${id}'`)
 
@@ -36,7 +36,7 @@ const addNewUser = async (req, res) => {
 }
 
 const removeUser = async (req, res) => {
-    const { id } = req.body
+    const { id } = req.params
 
     if (!id) return res.status(403).send({ error: "Input Fields Cannot Be Empty" })
 
