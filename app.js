@@ -6,10 +6,14 @@ const client = require('./config/db')
 
 const PORT = 4000
 
+app.use(express.json({}))
+app.use(express.urlencoded({ extended: true }))
+
 app.use(express.static(path.join(__dirname, "public", "views")))
 app.use('/', require('./routers/root'))
 
 app.use('/users', require('./routers/userRoutes'))
+app.use('/auth', require('./routers/authRoutes'))
 
 app.use('*', (req, res) => {
     res.status(404)
