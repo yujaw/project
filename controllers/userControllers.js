@@ -40,9 +40,11 @@ const removeUser = async (req, res) => {
 
     if (!id) return res.status(403).send({ error: "Input Fields Cannot Be Empty" })
 
-    await client.query(`DELETE FROM users WHERE id = '${id}'`)
-        .then((data) => res.send(data))
-        .catch((err) => console.error(err))
+    const foundUser = await client.query(`DELETE FROM users WHERE id = '${id}' RETURNING *`)
+
+    if (foundUser.rows.length <= 0) return res.status(404).send({ error: "Invalid Credentials" })
+
+    res.send({message: "User Deleted Successfully"})
 }
 
 module.exports = { getAllUsers, addNewUser, removeUser, getUserById }
